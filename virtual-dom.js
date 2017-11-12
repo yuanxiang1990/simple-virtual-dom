@@ -1,10 +1,3 @@
-/**
- * virtualdom节点
- * @param tagName
- * @param props
- * @param children
- * @constructor
- */
 var index = -1;
 var patch = [];
 var REPLACE = 0;
@@ -15,6 +8,13 @@ var TEXT = 3;
 function type(obj) {
     return Object.prototype.toString.call(obj).match(/\[object\s*(\w+)\]/)[1];
 }
+/**
+ * virtualdom节点
+ * @param tagName
+ * @param props
+ * @param children
+ * @constructor
+ */
 function Element (tagName, props, children) {
     this.tagName = tagName;
     this.props = props||null;
