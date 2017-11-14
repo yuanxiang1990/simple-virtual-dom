@@ -97,9 +97,15 @@ function differChildren(oldChildren, newChildren) {
     var i = 0, j = 0;//i:simulate indx j:new array index
     while (j < newChildren.length) {
         var newItem = newChildren[j];
+        if (simulateArray[i] == newChildren[j]) {
+            i++;
+            j++;
+            continue;
+        }
         if (simulateArray[i]) {
             if (simulateArray[i + 1] == newItem) {
                 simulateArray.splice(i, 1);
+                i++;
                 j++;
             }
             else {
@@ -114,10 +120,11 @@ function differChildren(oldChildren, newChildren) {
             j++;
         }
     }
+
     return simulateArray;
 }
 
-console.log(differChildren([1, 2, 3], [1, 2, 1, 4]));
+console.log(differChildren([1, 6, 3], [3, 2, 1, 4, 6,6,32]));
 /*
 var oldTree = new Element('div',null,[new Element("p",null,["aaa"]),new Element("a")]);
 var newTree = new Element('div',null,[new Element("a",null,["bbb"]),new Element("p")]);
