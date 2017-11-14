@@ -121,10 +121,17 @@ function differChildren(oldChildren, newChildren) {
         }
     }
 
+    /**
+     * 移除多余的dom元素
+     */
+    while(simulateArray.length>newChildren.length){
+        simulateArray.splice(simulateArray.length-1, 1);
+    }
+
     return simulateArray;
 }
 
-console.log(differChildren([1, 6, 3], [3, 2, 1, 4, 6,6,32]));
+console.log(differChildren([11, 1,1,31], [1]));
 /*
 var oldTree = new Element('div',null,[new Element("p",null,["aaa"]),new Element("a")]);
 var newTree = new Element('div',null,[new Element("a",null,["bbb"]),new Element("p")]);
