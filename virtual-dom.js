@@ -109,9 +109,9 @@ function differChildren(oldChildren, newChildren) {
                 j++;
             }
             else {
-                simulateArray.splice(i, 1, newItem);
-                j++;
+                simulateArray.splice(i, 0, newItem);
                 i++;
+                j++;
             }
         }
         else {
@@ -131,7 +131,7 @@ function differChildren(oldChildren, newChildren) {
     return simulateArray;
 }
 
-console.log(differChildren([11, 1,1,31], [1]));
+console.log(differChildren([11, 1,1,31], [1,4,11,31]));
 /*
 var oldTree = new Element('div',null,[new Element("p",null,["aaa"]),new Element("a")]);
 var newTree = new Element('div',null,[new Element("a",null,["bbb"]),new Element("p")]);
