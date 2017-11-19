@@ -13,11 +13,12 @@ function sameNode(vnode1, vnode2) {
 }
 
 function contains(a, obj) {
-    var i = a.length;
-    while (i--) {
+    var i = 0;
+    while (i<a.length) {
         if (sameNode(a[i], obj)) {
             return a[i];
         }
+        i++;
     }
     return false;
 }
@@ -71,14 +72,14 @@ function walk(oldNode, newNode, index, patches) {
 
 function differChildren(oldChildren, newChildren) {
     var newAdd = [], simulateArray = [], moves = [], children = [];
-    var oldCopy = oldChildren.slice(0);
-    console.log(newChildren)
+    var oldCopy = [].concat(oldChildren);
     for (var i = 0; i < oldCopy.length; i++) {
         var newNode = contains(newChildren, oldCopy[i]);
         if (!newNode) {
             oldCopy.splice(i, 1);
             children.push(null);
             remove(i);
+            i--;
         }
         else {
             children.push(newNode);
@@ -162,7 +163,6 @@ var dom = el("div", {key:1}, [
 var dom1 = el("div", {key:1}, [
     el("ul", {id: "u1"}, [
         el("li", {key:2}, ["21www22"]),
-        el("li", {key:1}, ["111"])
     ]),
     el("p", {id: "p1"}, [
         "aaaq"
