@@ -4,7 +4,7 @@ import p from "./patch";
 
 const REPLACE = 0;
 const REORDER = 1;
-const ATTR = 2;//暂不考虑
+const ATTR = 2;
 const TEXT = 3;
 
 function sameNode(vnode1, vnode2) {
