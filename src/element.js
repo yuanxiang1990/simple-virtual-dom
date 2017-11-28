@@ -29,11 +29,11 @@ class Element {
             }
             ele.appendChild(child)
         });
-        this.ele = ele;
+        //this.ele = ele;
         return ele;
     }
 }
 function el (tagName, attrs, children) {
     return new Element(tagName, attrs, children)
 }
-export  {el};
+export  {el,Element};

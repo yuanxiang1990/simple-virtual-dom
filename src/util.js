@@ -1,6 +1,6 @@
 var _ = {};
-
-_.setAttr = function setAttr (node, key, value) {
+import {Element} from "./element";
+_.setAttr = function setAttr(node, key, value) {
     switch (key) {
         case 'style':
             node.style.cssText = value
@@ -23,12 +23,48 @@ _.setAttr = function setAttr (node, key, value) {
     }
 }
 
-_.type = function (obj){
+_.type = function (obj) {
     return /\[object\s+(\w+)\]/.exec(Object.prototype.toString.call(obj))[1];
 }
 
-_.isString = function (obj){
+_.isString = function (obj) {
     return this.type(obj) === "String";
+}
+
+_.isObject = function (obj) {
+    return this.type(obj) === "Object";
+}
+
+_.isEmptyObject = function (obj) {
+    var name;
+    for (name in obj) {
+        return false;
+    }
+    return true;
+}
+_.clone = function (obj) {
+    var copy;
+    if(obj instanceof Array){
+        copy = [];
+    }
+    else if(obj instanceof Element){
+        copy = new Element();
+    }
+    else{
+        copy = {};
+    }
+
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if (typeof obj[key] == "object") {
+                copy[key] = _.clone(obj[key]);
+            }
+            else {
+                copy[key] = obj[key];
+            }
+        }
+    }
+    return copy;
 }
 
 export {_};

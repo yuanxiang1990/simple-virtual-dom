@@ -1,5 +1,6 @@
 import {el} from "./element";
 import {_} from "./util";
+import p from "./patch";
 
 const REPLACE = 0;
 const REORDER = 1;
@@ -7,6 +8,9 @@ const ATTR = 2;//暂不考虑
 const TEXT = 3;
 
 function sameNode(vnode1, vnode2) {
+    if(typeof vnode1=="string"&&typeof vnode1=="string"){
+        return vnode1 == vnode2;
+    }
     return (
         vnode1 && vnode2 && vnode1.tagName === vnode2.tagName&&vnode1.key === vnode2.key
     )
@@ -46,16 +50,22 @@ function walk(oldNode, newNode, index, patches) {
     }
     else if (sameNode(oldNode, newNode)) {
         //比较属性值得，暂不实现
-        //TODO
+        let attrPatch = differAttr(oldNode,newNode);
+        if(!_.isEmptyObject(attrPatch)) {
+            currentPatch.push({
+                type: ATTR,
+                attrs: attrPatch
+            });
+        }
         let diffs = differChildren(oldNode.children, newNode.children);
-        let newChildren = diffs.children;
+        oldNode.children = diffs.children;
         if (diffs.moves.length) {
             let reorderPatch = {type: REORDER, moves: diffs.moves}
             currentPatch.push(reorderPatch)
         }
         key_id = index;
         oldNode.children.forEach((child, i) => {
-            let newChild = newChildren[i];
+            let newChild = newNode.children[i];
             key_id++;
             // 递归继续比较
             walk(child, newChild, key_id, patches)
@@ -69,20 +79,34 @@ function walk(oldNode, newNode, index, patches) {
     }
 }
 
+function differAttr(oldNode,newNode) {
+    let oldAttr = oldNode.attrs;
+    let newAttr = newNode.attrs;
+    let attrsPatches = {};
+    for(let key in oldAttr){
+        if(oldAttr.hasOwnProperty(key)){
+            if(newAttr[key]!=oldAttr[key]){
+                attrsPatches[key] = newAttr[key];
+            }
+        }
+    }
+    for(let key in newAttr){
+        if(!oldAttr.hasOwnProperty(key)){
+            attrsPatches[key] = newAttr[key];
+        }
+    }
+    return attrsPatches;
+}
 
 function differChildren(oldChildren, newChildren) {
-    var newAdd = [], simulateArray = [], moves = [], children = [];
+    var newAdd = [], simulateArray = [], moves = [];
     var oldCopy = [].concat(oldChildren);
     for (var i = 0; i < oldCopy.length; i++) {
         var newNode = contains(newChildren, oldCopy[i]);
         if (!newNode) {
             oldCopy.splice(i, 1);
-            children.push(null);
             remove(i);
             i--;
-        }
-        else {
-            children.push(newNode);
         }
     }
     var newAddIndex = 0;
@@ -147,25 +171,32 @@ function differChildren(oldChildren, newChildren) {
 
     return {
         moves: moves,
-        children: children
+        children: simulateArray
     }
 }
 
-var dom = el("div", {key:1}, [
+var dom = el("div", {key:1,id:"ttt"}, [
     el("ul", {id: "u1"}, [
         el("li", {key:1}, ["111"]),
-        el("li", {key:2}, ["222"])
+        el("li", {key:2}, ["222"]),
+        "aa"
     ]),
     el("p", {id: "p1"}, [
         "aaa"
     ]),
 ]);
-var dom1 = el("div", {key:1}, [
+document.getElementById("dom").appendChild(dom.render());
+var dom1 = el("div", {key:1,a:1,id:"ttt"}, [
     el("ul", {id: "u1"}, [
-        el("li", {key:2}, ["21www22"]),
+        el("li", {key:2}, ["2220"]),
+        el("li", {key:1}, ["111"]),
+        "sssssasass"
     ]),
-    el("p", {id: "p1"}, [
+    el("p", {id: "p2"}, [
         "aaaq"
     ])
 ]);
-console.log(differ(dom, dom1));
+var domTemp = _.clone(dom);
+p(document.getElementById("ttt"),differ(domTemp, dom1));
+dom = dom1;
+
