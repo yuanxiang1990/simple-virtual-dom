@@ -49,7 +49,7 @@ function walk(oldNode, newNode, index, patches) {
         if (newNode !== oldNode) currentPatch.push({type: TEXT, content: newNode})
     }
     else if (sameNode(oldNode, newNode)) {
-        //比较属性值得
+        //比较属性
         let attrPatch = differAttr(oldNode,newNode);
         if(!_.isEmptyObject(attrPatch)) {
             currentPatch.push({
