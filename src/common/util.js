@@ -1,5 +1,5 @@
 var _ = {};
-import {Element} from "./element";
+import {Element} from "../vdom/element";
 _.setAttr = function setAttr(node, key, value) {
     switch (key) {
         case 'style':

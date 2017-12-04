@@ -1,4 +1,4 @@
-import { _ } from "./util";
+import { _ } from "../common/util";
 class Element {
     constructor(tagName, attrs, children) {
         this.tagName  = tagName;

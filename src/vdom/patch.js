@@ -1,4 +1,4 @@
-import {_} from "./util";
+import {_} from "../common/util";
 let index = 0;
 const REPLACE = 0;
 const REORDER = 1;

@@ -1,2 +1,2 @@
-# simple-virtual-dom
-虚拟dom模拟
+# vue-lean-demo
+vue学习demo
