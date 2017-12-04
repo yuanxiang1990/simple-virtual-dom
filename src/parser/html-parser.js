@@ -20,7 +20,9 @@ export function parseHTML(html, options) {
       }
     */
     while (html) {
+        if(html.indexOf("<")==0){
 
+        }
     }
 
     function advance (n) {
