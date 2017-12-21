@@ -1,7 +1,6 @@
 import {el} from "../vdom/element"
 
 export function gen(ast) {
-    console.log(ast)
     return createElement(ast);
 }
 
