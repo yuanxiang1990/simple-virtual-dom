@@ -42,6 +42,7 @@ export function parseHTML(html, options) {
       }
     */
     while (html) {
+        console.log("h"+html)
         var textEnd = html.indexOf("<");
         if (textEnd == 0) {
             const endTagMatch = html.match(endTag);
@@ -68,15 +69,14 @@ export function parseHTML(html, options) {
         let text, rest, next
         if (textEnd >= 0) {
             text = html.substring(0, textEnd);
-            stack.push({CharsToken:text});
+            stack.push({CharsToken: text});
             advance(textEnd)
         } else { // 之后的字符串不包含 '<' ，那剩余整个字符串都是文本节点了
             text = html;
-            stack.push({CharsToken:text});
+            stack.push({CharsToken: text});
             html = ''
         }
-
-        //options.chars(text)
+        options.chars(text);//处理文本
     }
 
     /**
@@ -101,7 +101,10 @@ export function parseHTML(html, options) {
             let end, attr
             while (!(end = html.match(startTagClose)) && (attr = html.match(attribute))) {
                 advance(attr[0].length)
-                match.attrs.push(attr)
+                match.attrs.push({
+                    name : attr[1],
+                    value:attr[4]
+                })
             }
             if (end) {
                 match.unarySlash = end[1]
@@ -113,7 +116,8 @@ export function parseHTML(html, options) {
     }
 
     function handleStartTag(startTagMatch) {
-        stack.push({StartToken:startTagMatch});
+        stack.push({StartToken: startTagMatch});
+        options.start(startTagMatch.tagName,startTagMatch.attrs,startTagMatch.unarySlash);
     }
 
     /**
@@ -123,7 +127,8 @@ export function parseHTML(html, options) {
      * @param end
      */
     function parseEndTag(tagName, start, end) {
-        stack.push({endToken:tagName})
+        stack.push({endToken: tagName});
+        options.end();
     }
 
     return stack;

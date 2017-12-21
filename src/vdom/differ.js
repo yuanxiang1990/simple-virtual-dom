@@ -175,6 +175,5 @@ function differChildren(oldChildren, newChildren) {
         children: simulateArray
     }
 }
-console.log(differ);
 export default differ;
 
