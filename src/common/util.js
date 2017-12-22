@@ -66,5 +66,4 @@ _.clone = function (obj) {
     }
     return copy;
 }
-
 export {_};

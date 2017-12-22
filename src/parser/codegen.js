@@ -1,22 +1,39 @@
-import {el} from "../vdom/element"
 
 export function gen(ast) {
-    return createElement(ast);
+    const code = ast ? getElement(ast) : '_c("div")'
+
+    return {
+        render: ("with(this){return " + code + "}")
+    }
+
 }
 
-function createElement(obj) {
-    if (obj.type == 3) {//文本节点
-        return obj.text;
+function getElement(el) {
+    let code
+    const children = genChildren(el.children);
+    code = `_c('${el.tag}'
+        ${
+        el.attrs ? `,${genText(el.attrs)}` : ',{}' // attr
+        }
+        ${
+        children ? `,${children}` : '' // children
+        })`;
+
+    return code
+}
+function genChildren(el) {
+    return `[${el.map(getNode).join(",")}]`;
+}
+
+function getNode(el, index, array) {
+    if (el.type == 3) {//文本节点
+        return genText(el.text);
     }
-    else if (obj.type == 1) {
-        return el(obj.tag, obj.attrs, createChild(obj.children))
+    else if(el.type==1){
+        return getElement(el);
     }
 }
 
-function createChild(children) {
-    var child = [];
-    children.forEach(function (val, i) {
-        child.push(createElement(val));
-    });
-    return child;
+function genText(text) {
+    return JSON.stringify(text);
 }

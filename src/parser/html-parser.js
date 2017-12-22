@@ -42,7 +42,6 @@ export function parseHTML(html, options) {
       }
     */
     while (html) {
-        console.log("h"+html)
         var textEnd = html.indexOf("<");
         if (textEnd == 0) {
             const endTagMatch = html.match(endTag);

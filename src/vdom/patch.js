@@ -24,7 +24,6 @@ function walk(rootNode, pathches) {
 
 function applyPatch(node,pathch) {
     pathch.forEach(p => {
-        console.log(p.type)
         switch (p.type) {
             case REPLACE:
                 let newNode = (typeof p.node === 'string')

@@ -1,7 +1,7 @@
 import {parseHTML} from "./html-parser";
 import {gen} from "./codegen";
-
-export function parse (template) {
+import {_} from "../common/util";
+function parse (template) {
     let stack = [];
     let root // ast的根节点
     let currentParent // 当前节点的父亲节点
@@ -36,7 +36,8 @@ export function parse (template) {
             if (!currentParent) {
                 return
             }
-            const children = currentParent.children
+            const children = currentParent.children;
+            text = text.trim();
             if (text) { // 文本节点
                 children.push({
                     type: 3,
@@ -45,5 +46,18 @@ export function parse (template) {
             }
         }
     });
-    return gen(root);
+    return root;
+}
+
+function makeFunction (code, errors) {
+    return new Function(code)
+}
+
+export default function compile (template) {
+    const ast = parse(template.trim());
+    const code = gen(ast);
+    return {
+        ast,
+        render: makeFunction(code.render)
+    }
 }
