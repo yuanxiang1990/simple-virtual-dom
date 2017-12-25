@@ -1,7 +1,7 @@
 
 export function gen(ast) {
-    const code = ast ? getElement(ast) : '_c("div")'
-
+    const code = ast ? getNode(ast) : '_c("div",{},[])';
+    console.log("with(this){return " + code + "}")
     return {
         render: ("with(this){return " + code + "}")
     }
@@ -27,7 +27,12 @@ function genChildren(el) {
 
 function getNode(el, index, array) {
     if (el.type == 3) {//文本节点
-        return genText(el.text);
+        if(el.expression){
+            return el.expression;
+        }
+        else {
+            return genText(el.text);
+        }
     }
     else if(el.type==1){
         return getElement(el);

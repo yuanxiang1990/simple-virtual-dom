@@ -8,10 +8,14 @@ import patch from "../vdom/patch";
  * @constructor
  */
 function Vue(opt) {
-    this._initData(opt)
+    this._initData(opt.data);
+    this.opt = opt;
     this.$mount();
 }
 Vue.prototype._c = el;
+Vue.prototype._s = function (a) {
+    return a;
+};
 Vue.prototype._initData = function (data) {
     const vm = this
     for (let key in data) {
@@ -19,8 +23,7 @@ Vue.prototype._initData = function (data) {
     }
 }
 Vue.prototype._render = function () {
-    var f = compile(this.template);
-    console.log(f)
+    var f = compile(this.opt.template);
     return f.render.call(this);
 }
 Vue.prototype._update = function () {
