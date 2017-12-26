@@ -10,9 +10,10 @@ var vue = new Vue({
     template:
         `<div id='ttt'>
             <ul id='ul'>
-                <li key='1'>aaa</li>
-                <li key='2'>111{{b}}222{{a}}</li>
+                <li key='1'>{{a}}</li>
+                <li key='2'>{{b}}</li>
             </ul>
            </div>`
 });
-console.log(vue);
+vue.a = "ddsd";
+console.log(vue)

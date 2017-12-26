@@ -1,7 +1,6 @@
 
 export function gen(ast) {
     const code = ast ? getNode(ast) : '_c("div",{},[])';
-    console.log("with(this){return " + code + "}")
     return {
         render: ("with(this){return " + code + "}")
     }
