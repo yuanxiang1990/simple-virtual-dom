@@ -66,4 +66,11 @@ _.clone = function (obj) {
     }
     return copy;
 }
+/**
+ * Perform no operation.
+ * Stubbing args to make Flow happy without leaving useless transpiled code
+ * with ...rest (https://flow.org/blog/2017/05/07/Strict-Function-Call-Arity/)
+ */
+export function noop () {};
+
 export {_};

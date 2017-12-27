@@ -24,7 +24,7 @@ function genChildren(el) {
     return `[${el.map(getNode).join(",")}]`;
 }
 
-function getNode(el, index, array) {
+function getNode(el) {
     if (el.type == 3) {//文本节点
         if(el.expression){
             return el.expression;

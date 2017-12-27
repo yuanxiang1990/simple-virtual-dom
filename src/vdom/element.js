@@ -7,7 +7,8 @@ class Element {
         // 设置this.key属性，为了后面list diff做准备
         this.key = attrs
             ? attrs.key
-            : void 0
+            : void 0;
+        this.vnode = 1//虚拟dom标记
     }
 
     render(){
@@ -21,11 +22,11 @@ class Element {
         //遍历子节点
         this.children.forEach(function(value,index,array){
             let child;
-            if(_.isString(value)){
-                child = document.createTextNode(value);
-            }
-            else {
+            if(value instanceof Element){
                 child = value.render();
+            }
+            else{
+                child = document.createTextNode(value);
             }
             ele.appendChild(child)
         });

@@ -47,11 +47,9 @@ export function proxy(target, sourceKey, key) {
         enumerable: true,
         configurable: true,
         get: function () {
-
             return this[sourceKey][key];
         },
         set: function (newVal) {
-            console.log(newVal)
             this[sourceKey][key] = newVal;
         }
     });

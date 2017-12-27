@@ -46,7 +46,7 @@ function walk(oldNode, newNode, index, patches) {
     if (newNode === null || newNode === undefined) {
         // 先不做操作, 具体交给 list diff 处理
     }
-    else if (_.isString(oldNode) && _.isString(newNode)) {
+    else if (!oldNode.vnode && !newNode.vnode) {
         if (newNode !== oldNode) currentPatch.push({type: TEXT, content: newNode})
     }
     else if (sameNode(oldNode, newNode)) {
@@ -59,6 +59,7 @@ function walk(oldNode, newNode, index, patches) {
             });
         }
         let diffs = differChildren(oldNode.children, newNode.children);
+        console.log(diffs.moves);
         oldNode.children = diffs.children;
         if (diffs.moves.length) {
             let reorderPatch = {type: REORDER, moves: diffs.moves}
