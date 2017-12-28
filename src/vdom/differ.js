@@ -34,7 +34,7 @@ function contains(a, obj) {
 function differ(oldTree, newTree) {
     let index = 0;
     let patches = {};
-    walk(oldTree, newTree, index, patches)
+    walk(oldTree, newTree, index, patches);
     return patches;
 };
 
@@ -59,7 +59,6 @@ function walk(oldNode, newNode, index, patches) {
             });
         }
         let diffs = differChildren(oldNode.children, newNode.children);
-        console.log(diffs.moves);
         oldNode.children = diffs.children;
         if (diffs.moves.length) {
             let reorderPatch = {type: REORDER, moves: diffs.moves}

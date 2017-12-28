@@ -6,6 +6,7 @@ const ATTR = 2;
 const TEXT = 3;
 
 function patch(rootNode, pathches) {
+    index = 0;
     walk(rootNode, pathches);
 }
 
@@ -23,6 +24,7 @@ function walk(rootNode, pathches) {
 }
 
 function applyPatch(node,pathch) {
+
     pathch.forEach(p => {
         switch (p.type) {
             case REPLACE:

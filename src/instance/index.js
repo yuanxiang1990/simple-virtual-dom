@@ -50,14 +50,14 @@ Vue.prototype._update = function () {
     const prevVnode = vm._vnode
     const vnode = vm._render();
     let $ele = document.getElementById(vm.$opt.ele);
-    let rootNode = _wrapVNode($ele,vnode);
-    vm._vnode = rootNode;
+    let rootVNode = _wrapVNode($ele,vnode);
+    vm._vnode = rootVNode;
     if (prevVnode) {
         // patch前后两个VNode，渲染到 Dom 树
-        patch(document.getElementById(vm.$opt.ele), differ(prevVnode, rootNode));
+        patch(document.getElementById(vm.$opt.ele), differ(prevVnode, rootVNode));
     }
     else {
-        $ele.parentNode.replaceChild(rootNode.render(),$ele);
+        $ele.parentNode.replaceChild(rootVNode.render(),$ele);
     }
 }
 
