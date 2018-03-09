@@ -7,7 +7,7 @@ const ATTR = 2;
 const TEXT = 3;
 
 function sameNode(vnode1, vnode2) {
-    if (typeof vnode1 == "string" && typeof vnode1 == "string") {
+    if (!vnode1.vnode &&!vnode2.vnode) {
         return vnode1 == vnode2;
     }
     return (

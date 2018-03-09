@@ -19,11 +19,10 @@ export function defineReactive(obj, key, val, vm) {
         enumerable: true,
         configurable: true,
         get: function reactiveGetter() {
-            return val
+            return val;
         },
         set: function reactiveSetter(newVal) {
-            const value = val
-            console.log(val)
+            const value = val;
             if (newVal === value) {
                 return
             }

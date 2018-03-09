@@ -6,7 +6,9 @@ import {
     observe,
     proxy
 } from "../observer/index";
-import noop from "../common/util";
+import {
+    noop
+} from "../common/util";
 
 const sharedPropertyDefinition = {
     enumerable: true,

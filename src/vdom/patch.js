@@ -28,7 +28,7 @@ function applyPatch(node,pathch) {
     pathch.forEach(p => {
         switch (p.type) {
             case REPLACE:
-                let newNode = (typeof p.node === 'string')
+                let newNode =  p.node.vnode
                     ? document.createTextNode(p.node)
                     : p.node.render()
                 node.parentNode.replaceChild(newNode, node)
@@ -59,13 +59,13 @@ function applyPatch(node,pathch) {
                     }
                     else if(m.type==1){//insert
                         if(node.childNodes[m.index]){
-                            var newNode = (typeof m.item =="string")
+                            var newNode = !m.item.vnode
                                     ? document.createTextNode(m.item)
                                     : m.item.render()
                             node.insertBefore(newNode,node.childNodes[m.index]);
                         }
                         else{
-                            var newNode = (typeof m.item =="string")
+                            var newNode = !m.item.vnode
                                 ? document.createTextNode(m.item)
                                 : m.item.render()
                            node.appendChild(newNode);
