@@ -26,4 +26,4 @@ vue.a = 1024;
 setTimeout(function () {
     vue.a = 2048;
 },1000)
-console.log(vue);
+//console.log(vue);

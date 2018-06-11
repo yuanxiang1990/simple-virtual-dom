@@ -1,4 +1,5 @@
 import {_} from "../common/util";
+import Dep from "./dep";
 
 /**
  *数据响应式
@@ -14,11 +15,14 @@ export function observe(val, vm) {
 }
 
 export function defineReactive(obj, key, val, vm) {
-    observe(val, vm);
+    const dep = new Dep();
     Object.defineProperty(obj, key, {
         enumerable: true,
         configurable: true,
         get: function reactiveGetter() {
+            if(Dep.target){
+                dep.depend()
+            }
             return val;
         },
         set: function reactiveSetter(newVal) {
@@ -28,10 +32,11 @@ export function defineReactive(obj, key, val, vm) {
             }
 
             val = newVal
-            observe(newVal, vm)
-
+            console.log(dep);
+           // observe(newVal, vm)
+            dep.notify();
             // 当发生写操作的时候 要更新视图
-            vm && vm._update();
+           // vm && vm._update();
         }
     })
 }

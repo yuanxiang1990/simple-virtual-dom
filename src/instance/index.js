@@ -9,7 +9,7 @@ import {
 import {
     noop
 } from "../common/util";
-
+import {Watcher} from "../observer/watcher";
 const sharedPropertyDefinition = {
     enumerable: true,
     configurable: true,
@@ -25,6 +25,7 @@ function Vue(opt) {
     this.$opt = opt;
     this._initData(this.$opt.data);
     this._data = opt.data;
+    this._watchers = [];
     observe(this._data, this);
     if(opt.computed){
         initComputed(this,opt.computed);
@@ -69,8 +70,9 @@ Vue.prototype.setData = function (data) {
 }
 
 Vue.prototype.$mount = function (el) {
-    const vm = this
-    this._update()
+    const vm = this;
+    this._update();
+    vm._watcher = new Watcher(this,this._update,noop);//初始化默认watcher
 }
 
 /**

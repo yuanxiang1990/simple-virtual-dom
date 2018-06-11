@@ -1,4 +1,8 @@
-
+/**
+ * 拼接构造虚拟dom的函数
+ * @param ast
+ * @returns {{render: string}}
+ */
 export function gen(ast) {
     const code = ast ? getNode(ast) : '_c("div",{},[])';
     return {
