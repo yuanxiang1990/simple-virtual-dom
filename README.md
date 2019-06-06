@@ -1,2 +1,2 @@
 # vue-lean-demo
-vue学习demo
+该项目是读vue源码时实现的一个简易vue
